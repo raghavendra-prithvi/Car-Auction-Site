@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+<div class='container' style='border:0px solid #000;'>
+<div class='span7 offset2'>
+<div class='well'>
+	<div class='thumbnail'><%= image_tag @car.photo.url %></div>
+
+<h4>
+  <b>Name:</b>
+  <%= @car.name %>
+</h4>
+
+<h6>
+<p>
+  <b>Description:</b>
+  <%= @car.description %>
+</p>
+</h6>
+
+<h6>
+	<p>
+  <b>Starting price:</b>
+  <%= @car.starting_price %>
+</p>	
+</h6>
+
+<p>
+  <b>Current Bid Amount:</b>
+  <%= @car.raise_amount %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @car.end_date %>
+</p>
+
+<%=form_for @auction, :remote => true, :url => url_for(:controller => 'cars', :action => 'auction_save'),:format => 'js'  do |f|%>
+    			<div style='width:100%;height:auto'>
+				Raise Amount:
+    			<%= f.text_field :raise_amount,:style => 'width:78px;' %>
+				</div>
+				<div style='width:100%'>
+    			Auction Mail:
+    			<%= f.text_field :auction_mail_id,:style => 'width:78px;margin-left:10px;' %>
+				<%=f.hidden_field :car_id, :value =>@car.id%>
+				</div>
+				<div class='button'>
+			<%=submit_tag  "Participate", :name => 'auction_save' %></div>
+<%end%>
+<div id='success_div'></div>
+<%if current_user %>
+	<%= link_to 'Edit', edit_car_path(@car) %> |
+<% end %>
+<%= link_to 'Back', cars_path %>
+</div>
+</div>
+</div>

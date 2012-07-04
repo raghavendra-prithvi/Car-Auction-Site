@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+<div class='container' style='border:0px solid #000;'>
+<div class='span7 offset2'>
+<div class='well'>
+	<div class='thumbnail'><%= image_tag @car.photo.url %></div>
+<h4>
+  <b>Name:</b>
+  <%= @car.name %>
+</h4>
+
+<h6>
+<p>
+  <b>Description:</b>
+  <%= @car.description %>
+</p>
+</h6>
+
+<h6>
+	<p>
+  <b>Starting price:</b>
+  <%= @car.starting_price %>
+</p>	
+</h6>
+
+
+<p>
+  <b>End date:</b>
+  <%= @car.end_date %>
+</p>
+
+<p>
+  <b>Raise amount:</b>
+  <%= @car.raise_amount %>
+</p>
+<%if current_user %>
+	<%= link_to 'Edit', edit_car_path(@car) %> |
+<% end %>
+<%= link_to 'Back', cars_path %>
+</div>
+</div>
+</div>

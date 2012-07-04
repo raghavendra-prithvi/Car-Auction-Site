@@ -1,0 +1,137 @@
+:css
+  .hero-unit{
+    background-image :url('/assets/Toyota-Avanza-wallpaper-03.jpg');  
+  }
+.hero-unit
+  %center    
+    %p
+      =link_to image_tag('facebook_btn.png'), "#"
+.container{:style => 'border:1px solid #000;'}
+  .row
+    - i = 0
+    - @cars.each do |car|
+      .span3{:style => "height:400px;margin-top:15px"}
+        %a{:href => '/cars/'+car.id.to_s, :class => 'thickbox '}
+          .thumbnail   
+            = image_tag(car.photo.url, :size => "244x180")            
+        %h6{:style => "font-weight:normal; padding: 10px 20px 0px 20px; font-weight: bold"} 
+          = car.name
+        %h4{:style => "padding: 0px 20px 10px 20px;"}
+          %a{:href => '/guides/display?height=600&width=800&id=', :class=>'thickbox'}
+            = car.starting_price
+        %p{:style => "padding-left: 20px; font-style:oblique;"} 
+          = car.description
+        %p{:style => "padding-left: 20px; color: #666666;"}
+          = car.end_date
+        %p{:style => "padding-left: 20px; color: #666666;"}
+          = car.raise_amount
+          = link_to 'Show', car
+          /= link_to 'Add to New Guide', new_guide_path
+        %p
+          = link_to 'Edit', edit_car_path(car)
+          = link_to 'Destroy', car, confirm: 'Are you sure?', method: :delete
+      - i += 1
+      - if i%4 == 0
+        %br
+     
+
+
+
+
+
+
+
+
+
+%br/ 
+.footer.modal-footer{:style =>"height:10px;clear:both;position:fixed;bottom:0px;"}
+  #fb-root
+  .fb-like{"data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
+</script>     
+:javascript
+  (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=206096812769730";
+      fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  $(document).ready(function(){  
+      session_id = '#{session[:user_id]}'
+      console.log(session_id)
+            
+  	  
+  	  $('#browse_by').change(function(){
+  	      addPageHeader();
+  	  });
+  	  
+  	  /* Adding Dynamic Links to the Header */
+  	  $('.dynaLink').bind('click',function(event){
+             event.preventDefault();
+             $.get(this.href,{},function(response){
+                     $('#response').html(response)
+              }) 
+        })
+  	  
+  });
+  
+  function changespan(val){
+    console.log(val);
+    class_val = $('#dynamic-span').attr('class');
+    console.log(class_val);
+    $('div.'+class_val).each(function(){
+      $(this).removeClass();
+      $(this).addClass('span'+val)
+      
+    
+    });
+  
+  }
+  
+  function addPageHeader(){
+            $('#page-header1').empty();
+          var token = 'DBHKFSCXVMRTB5HSZD3DU5ZMTZSXYVPIAACZMYJ3OBQ02CH2'
+            $.getJSON('https://api.foursquare.com/v2/venues/categories?&oauth_token='+token,{}, function(data) {
+        	                    categories = data['response']['categories']
+        	                    console.log(data)
+        	                    for(i = 0; i<categories.length ; i++){
+        	                          $('#page-header1').append('<a   href="#" >'+categories[i]['name']+'</a><nbsp>');
+          	                    }
+        	  });
+ 
+  	  
+  }
+  function addPageHeader2(){
+          
+            $('#page-header1').empty();
+          var token = 'DBHKFSCXVMRTB5HSZD3DU5ZMTZSXYVPIAACZMYJ3OBQ02CH2'
+  	        $('#page-header1').empty();
+            $('#page-header1').append('<h1><a href="#" id="LatestLink" class="dynaLink" onclick="search_guide(\'latest\')">Latest</a>  <a href="#" id="MostPopular" class="dynaLink" onclick="search_guide(\'popular\')"> Most Popular</a>   <a href="#" id="HighestRated" class="dynaLink" onclick="search_guide(\'highrated\')">Highest Rated</a>   <a href="#" id="StressFactor" class="dynaLink" onclick="search_guide(\'stress\')">Stress Factor</a> </h1>')
+  	        //addPageHeaderGuide();
+  	  
+  
+  }
+  
+  function search_guide(key){
+      $.ajax({
+                               // type : "GET",
+                                datatype: 'html',
+                                url: 'guides/search?key='+key,
+
+                               /* success: function(data) {
+                                $('#content-div').empty();
+  								jQuery('#content-div').html(data);
+                                },
+                                error : function() {
+                                         alert("Sorry, The requested property could not be found.");
+                                }*/
+                        }).done(function( html ) {
+                            $("#content-div").html("");
+                            $("#content-div").append(html);
+                          });
+ 
+  }
+          
+
+  
+

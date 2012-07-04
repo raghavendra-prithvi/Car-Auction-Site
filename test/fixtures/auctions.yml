@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  raise_amount: 1
+  aution_mail_id: MyString
+  user_id: 1
+
+two:
+  raise_amount: 1
+  aution_mail_id: MyString
+  user_id: 1

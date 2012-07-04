@@ -1,0 +1,47 @@
+<div class='span7 offset2 container'>
+<%= form_for(@car, :html => { :multipart => true, :class => 'well' } ) do |f| %>
+  <% if @car.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+      <ul>
+      <% @car.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class='thumbnail'>
+  	<%=image_tag @car.photo.url,:size =>'450x350' %>
+  <div class='pull_right' align='right'>
+  	<%=link_to 'change pic','#', :onclick => '$("#photo_field").show()' %></div>
+  </div>
+    <div class="field" style='display:none' id='photo_field' align='right'>    
+    <%= f.file_field :photo %>
+  </div>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => '25' %>
+  </div>
+  <div class="field">
+    <%= f.label :starting_price %>
+    <%= f.text_field :starting_price %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </div>
+  <div class="field">
+    <%= f.label :raise_amount %><br />
+    <%= f.text_field :raise_amount %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+</div>

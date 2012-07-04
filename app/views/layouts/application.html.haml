@@ -1,0 +1,48 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %title Car Auction Site
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/  
+    = javascript_include_tag 'application'  
+    = stylesheet_link_tag 'jquery-ui-1.8.20.custom.css', 'thickbox.css', 'font-awesome.css', "bootstrap.css", "bootstrap-responsive.css"
+    = csrf_meta_tags 
+    /= render '_style.css.erb'
+    :css
+      body {
+            
+            }
+      .hero-unit {
+            
+            background-repeat:no-repeat;
+      }            
+  %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          .brand    
+            =image_tag( "logo.png", :onclick => "window.location.href = '/'")
+          .nav-collapse
+            %ul.nav
+              %li.active
+                - if current_user
+                  = link_to "Create Car", new_car_path
+            /.nav-collapse
+            .btn-group.pull-right
+              %li
+                - if !current_user
+                  =link_to "Signup", "/users/new"
+                  =link_to "Login", "/sessions/new"
+                -else                  
+                  =link_to 'Logout', "/sessions/delete", :method => :delete
+    = javascript_include_tag 'jquery-1.7.2.min.js'    
+    = yield
+    .row
+    %hr
+      %footer
+        %p © 2012 Car Auction Site
+
+
+

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @car.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @car.description %>
+</p>
+
+<p>
+  <b>Starting price:</b>
+  <%= @car.starting_price %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @car.end_date %>
+</p>
+
+<p>
+  <b>Raise amount:</b>
+  <%= @car.raise_amount %>
+</p>
+
+<p>
+  <b>Pic url:</b>
+  <%= @car.pic_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_car_path(@car) %> |
+<%= link_to 'Back', cars_path %>
