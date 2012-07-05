@@ -4,8 +4,9 @@ gem 'rails', '3.2.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'mysql'
+gem 'pg'
+gem 'activerecord-postgresql-adapter'
+#gem 'mysql'
 gem 'bcrypt-ruby'
 gem 'paperclip'
 gem 'haml'
