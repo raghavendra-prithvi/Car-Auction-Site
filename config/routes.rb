@@ -1,7 +1,13 @@
 CarAuctionSite::Application.routes.draw do
-  resources :cars
-  root :to => 'cars#index'
-  match 'cars/auction_save' => 'cars#auction_save'
+  get "auctionheroku/apps"
+
+  #match 'cars/auction_save' => 'cars#auction_save'
+  resources :cars do 
+    collection do
+      post :auction_save
+    end
+  end
+  root :to => 'cars#index'  
   match 'sessions/delete' => 'sessions#destroy'
   resources :users
   resources :sessions

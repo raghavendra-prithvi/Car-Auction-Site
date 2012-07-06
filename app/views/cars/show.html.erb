@@ -25,7 +25,9 @@
 
 <p>
   <b>Current Bid Amount:</b>
-  <%= @car.raise_amount %>
+  <div id='current_bid_amount'>
+  	<%= @car.raise_amount.to_i + @car.starting_price.to_i %>
+  </div>
 </p>
 
 <p>
@@ -54,3 +56,8 @@
 </div>
 </div>
 </div>
+
+
+<text type='javascript' > 
+  
+</text>

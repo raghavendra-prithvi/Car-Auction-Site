@@ -14,11 +14,8 @@ class CarsController < ApplicationController
   # GET /cars/1
   # GET /cars/1.json
   def show
-    @car = Car.find(params[:id])
-    @auction = @car.auctions.last
-    if @auction.nil?
-      @auction = Auction.new
-    end
+    @car = Car.find(params[:id])    
+    @auction = Auction.new
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @car }
@@ -46,11 +43,12 @@ class CarsController < ApplicationController
   def create
     @car = Car.new
     @car.name = params['car']['name']
-    @car.description = params['car']['description']
-    puts "before"
+    @car.description = params['car']['description']    
+    @car.starting_price = params['car']['starting_price']
+    @car.current_bid_amount = params['car']['starting_price']
     response["chunked"] = true
     @car.photo = params['car']['photo']
-    puts "afterf"
+    
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
@@ -66,21 +64,20 @@ class CarsController < ApplicationController
   # PUT /cars/1.json
   def update
     if(params[:auction])
-      puts "****"
       @auction = Auction.new(params[:auction])
       @car = Car.find(params[:auction][:car_id])
       @car.raise_amount = params[:auction][:raise_amount]
+      @car.current_bid_amount += params[:auction][:raise_amount].to_i
       if @auction.save
         if @car.save
           respond_to do |format|
-            auction_save.js 
+            format.js
           end
         end
       end
     else
-      puts "&&&&&&&"
       @car = Car.find(params[:id])
-  
+      @car.current_bid_amount = params['car']['starting_price']  
       respond_to do |format|
         if @car.update_attributes(params[:car])
           format.html { redirect_to @car, notice: 'Car was successfully updated.' }
@@ -98,11 +95,13 @@ class CarsController < ApplicationController
     @auction = Auction.new(params[:auction])
     @car = Car.find(params[:auction][:car_id])
     @car.raise_amount = params[:auction][:raise_amount]
+    @car.current_bid_amount += params[:auction][:raise_amount].to_i
     if @auction.save
       @car.save
       respond_to do |format|
-        format.js 
+        format.js
       end
+      #respond_to auction_save.js.erb
     #render :text => "Successfully Completed."
     end    
   end  
